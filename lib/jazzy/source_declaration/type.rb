@@ -11,6 +11,11 @@ module Jazzy
       attr_reader :kind
 
       def initialize(kind)
+        kind = kind
+          .gsub('objc', 'swift')
+          .gsub('sourcekitten.', '')
+          .gsub('.property', '.var.instance')
+          .gsub('.decl.method', '.decl.function.method')
         @kind = kind
         @type = TYPES[kind]
       end

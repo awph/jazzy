@@ -143,6 +143,7 @@ module Jazzy
 
     def self.should_document?(doc)
       return false if doc['key.doc.comment'].to_s.include?(':nodoc:')
+      return true if doc['key.kind'].start_with? 'objc.'
 
       # Document extensions & enum elements, since we can't tell their ACL.
       type = SourceDeclaration::Type.new(doc['key.kind'])
@@ -168,7 +169,11 @@ module Jazzy
 
     def self.make_paragraphs(doc, key)
       return nil unless doc[key]
-      doc[key].map do |p|
+      do_make_paragraphs(doc[key])
+    end
+
+    def self.do_make_paragraphs(doc)
+      doc.map do |p|
         if para = p['Para']
           Jazzy.markdown.render(para)
         elsif code = p['Verbatim'] || p['CodeListing']
@@ -202,7 +207,7 @@ module Jazzy
       declaration.column = doc['key.doc.column']
       declaration.declaration = Highlighter.highlight(
         doc['key.parsed_declaration'] || doc['key.doc.declaration'],
-        'swift',
+        'objc',
       )
       declaration.abstract = comment_from_doc(doc)
       declaration.discussion = ''
@@ -214,8 +219,10 @@ module Jazzy
     end
 
     def self.comment_from_doc(doc)
-      swift_version = Config.instance.swift_version.to_f
       comment = doc['key.doc.comment'] || ''
+      return do_make_paragraphs(comment) if comment.is_a?(Array)
+
+      swift_version = Config.instance.swift_version.to_f
       if swift_version < 2
         # comment until first ReST definition
         matches = /^\s*:[^\s]+:/.match(comment)
