@@ -260,15 +260,16 @@ module Jazzy
         end
         if declaration.type.enum_case?
           # Enum "cases" are thin wrappers around enum "elements".
-          declarations += make_source_declarations(doc['key.substructure'])
+          # declarations += make_source_declarations(doc['key.substructure'])
           next
         end
         next unless declaration.type.should_document?
 
         unless declaration.type.name
-          raise 'Please file an issue at ' \
+          warn 'Please file an issue at ' \
                 'https://github.com/realm/jazzy/issues about adding support ' \
                 "for `#{declaration.type.kind}`."
+          next
         end
 
         declaration.file = Pathname(doc['key.filepath']) if doc['key.filepath']
