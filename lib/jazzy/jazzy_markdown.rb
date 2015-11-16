@@ -23,6 +23,7 @@ module Jazzy
                             Author
                             Authors
                             Bug
+                            Class
                             Complexity
                             Copyright
                             Date
@@ -33,6 +34,7 @@ module Jazzy
                             Parameter
                             Postcondition
                             Precondition
+                            Project
                             Remark
                             Requires
                             Returns
