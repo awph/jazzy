@@ -35,6 +35,7 @@ module Jazzy
                             Postcondition
                             Precondition
                             Project
+                            Protocol
                             Remark
                             Requires
                             Returns
