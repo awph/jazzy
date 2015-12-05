@@ -105,6 +105,11 @@ module Jazzy
       description: 'The root path to your Objective-C framework.',
       parse: ->(fr) { expand_path(fr) }
 
+    config_attr :sdk,
+      command_line: '--sdk [iphone|watch|appletv][os|simulator]|macosx',
+      description: 'The SDK for which your code should be built.',
+      default: 'macosx'
+
     config_attr :config_file,
       command_line: '--config PATH',
       description: ['Configuration file (.yaml or .json)',
@@ -222,8 +227,8 @@ module Jazzy
 
     config_attr :skip_undocumented,
       command_line: '--[no-]skip-undocumented',
-      description: "Don't document declarations that have no documentation '\
-                  'comments.",
+      description: "Don't document declarations that have no documentation "\
+                   'comments.',
       default: false
 
     config_attr :hide_documentation_coverage,
@@ -235,7 +240,7 @@ module Jazzy
       description: ['Custom navigation categories to replace the standard '\
                     '“Classes, Protocols, etc.”', 'Types not explicitly named '\
                     'in a custom category appear in generic groups at the end.',
-                    'Example: http://git.io/vcTZm'],
+                    'Example: http://git.io/v4Bcp'],
       default: []
 
     config_attr :template_directory,
