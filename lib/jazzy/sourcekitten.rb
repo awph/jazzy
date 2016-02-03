@@ -223,24 +223,13 @@ module Jazzy
         doc['key.parsed_declaration'] || doc['key.doc.declaration'],
         Config.instance.objc_mode ? 'objc' : 'swift',
       )
-      declaration.abstract = comment_from_doc(doc)
+      declaration.abstract = Jazzy.markdown.render(doc['key.doc.comment'] || '')
       declaration.discussion = ''
       declaration.return = make_paragraphs(doc, 'key.doc.result_discussion')
 
       declaration.parameters = parameters(doc)
 
       @documented_count += 1
-    end
-
-    def self.comment_from_doc(doc)
-      swift_version = Config.instance.swift_version.to_f
-      comment = doc['key.doc.comment'] || ''
-      if swift_version < 2
-        # comment until first ReST definition
-        matches = /^\s*:[^\s]+:/.match(comment)
-        comment = comment[0...matches.begin(0)] if matches
-      end
-      Jazzy.markdown.render(comment)
     end
 
     def self.make_substructure(doc, declaration)
@@ -330,9 +319,9 @@ module Jazzy
     # Two declarations get merged if they have the same deduplication key.
     def self.deduplication_key(decl)
       if decl.type.swift_extensible? || decl.type.swift_extension?
-        [decl.usr]
+        [decl.usr, decl.name]
       else
-        [decl.usr, decl.type.kind]
+        [decl.usr, decl.name, decl.type.kind]
       end
     end
 

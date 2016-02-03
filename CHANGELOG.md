@@ -2,7 +2,37 @@
 
 ##### Breaking
 
-* None.
+* Config files now use the same option names as the command line. If you are
+  using one of the keys that has changed in your `.jazzy.yaml`, you will receive
+  a warning. See the [pull request](https://github.com/realm/jazzy/pull/456) for
+  a complete list of changed options. As always, you can get a list of all
+  options with `jazzy --help config`.  
+  [Paul Cantrell](https://github.com/pcantrell)
+
+##### Bug Fixes
+
+* Workaround for an apparent SourceKit bug which sometimes caused extensions
+  to be merged into the wrong type.  
+  [Paul Cantrell](https://github.com/pcantrell)
+  [#459](https://github.com/realm/jazzy/issues/459)
+  [#460](https://github.com/realm/jazzy/issues/460)
+
+## 0.5.0
+
+##### Breaking
+
+* `--swift-version` now defaults to 2.1.1 instead of 2.1.  
+  [Nikita Lutsenko](https://github.com/nlutsenko)
+  [#416](https://github.com/realm/jazzy/pull/416)
+
+* Swift 1.x is no longer supported.
+
+* `--templates-directory` and `--assets-directory` have been deprecated in favor
+  of `--theme`. Specify either 'apple' (default), 'fullwidth' or the path to
+  your mustache templates and other assets for a custom theme.  
+  [Karl Bowden](https://github.com/agentk)
+  [JP Simard](https://github.com/jpsim)
+  [#130](https://github.com/realm/jazzy/issues/130)
 
 ##### Enhancements
 
@@ -10,9 +40,22 @@
   projects.  
   [Jeff Verkoeyen](https://github.com/jverkoey)
 
+* Add `--head` option to inject custom HTML into `<head></head>`.  
+  [JP Simard](https://github.com/jpsim)
+
 ##### Bug Fixes
 
-* None.
+* Fix an issue where extension documentation would use the original type
+  documentation block rather than the comment immediately preceding the
+  extension.  
+  [JP Simard](https://github.com/jpsim)
+  [#230](https://github.com/realm/jazzy/issues/230)
+  [#313](https://github.com/realm/jazzy/issues/313)
+  [#334](https://github.com/realm/jazzy/issues/334)
+
+* Fix multi-byte documentation issues.  
+  [Norio Nomura](https://github.com/norio-nomura)
+  [#403](https://github.com/realm/jazzy/issues/403)
 
 
 ## 0.4.1
@@ -42,7 +85,7 @@
   - New `...` wildcard prevents you from having to list all method parameters:
     `someMethod(...)`
 
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
   [#327](https://github.com/realm/jazzy/issues/327)
   [#329](https://github.com/realm/jazzy/issues/329)
   [#359](https://github.com/realm/jazzy/issues/359)
@@ -66,12 +109,12 @@
 
 * Links to source files on GitHub are no longer broken when `source_directory`
   does not point to the current working directory.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 * When `excluded_files` is specified in a config file, it is now resolved
   relative to the file (like other options) instead of relative to the working
   directory.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 
 ## 0.4.0
@@ -94,7 +137,7 @@
 
 * Jazzy can now read options from a configuration file. The command line
   provides comprehensive help for available options via `jazzy -h config`.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
   [#310](https://github.com/realm/jazzy/pull/310)
 
 * Render special list items (e.g. Throws, See, etc.). See
@@ -108,7 +151,7 @@
 
 * Swift extensions are now merged with their extended type, rendering a note
   to describe extension default implementations and extension methods.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 ##### Bug Fixes
 
@@ -172,7 +215,7 @@
 
 * Declarations can now be grouped by custom categories defined in a JSON or YAML
   file passed to `--categories`.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 ##### Bug Fixes
 
@@ -181,7 +224,7 @@
   [#244](https://github.com/realm/jazzy/issues/244)
 
 * Empty extensions are no longer documented.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 * Undocumented enum cases are now supported.  
   [JP Simard](https://github.com/jpsim)
@@ -200,7 +243,7 @@
   [JP Simard](https://github.com/jpsim)
 
 * Show type declaration under its title.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 * Added support for custom assets: pass `--assets-directory` to jazzy.  
   [gurkendoktor](https://github.com/gurkendoktor)
@@ -215,7 +258,7 @@
   [#236](https://github.com/realm/jazzy/issues/236)
 
 * `--exclude` now works properly if its argument is a relative path.  
-  [pcantrell](https://github.com/pcantrell)
+  [Paul Cantrell](https://github.com/pcantrell)
 
 
 ## 0.2.3

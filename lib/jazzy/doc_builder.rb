@@ -175,7 +175,8 @@ module Jazzy
     end
 
     def self.copy_assets(destination)
-      FileUtils.cp_r(Config.instance.assets_directory.children, destination)
+      assets_directory = Config.instance.theme_directory + 'assets'
+      FileUtils.cp_r(assets_directory.children, destination)
       Pathname.glob(destination + 'css/**/*.scss').each do |scss|
         contents = scss.read
         css = Sass::Engine.new(contents, syntax: :scss).render
@@ -194,6 +195,7 @@ module Jazzy
       doc = Doc.new # Mustache model instance
       doc[:name] = source_module.name
       doc[:overview] = ReadmeGenerator.generate(source_module)
+      doc[:custom_head] = Config.instance.custom_head
       doc[:doc_coverage] = source_module.doc_coverage unless
         Config.instance.hide_documentation_coverage
       doc[:structure] = source_module.doc_structure
@@ -299,6 +301,7 @@ module Jazzy
       end
 
       doc = Doc.new # Mustache model instance
+      doc[:custom_head] = Config.instance.custom_head
       doc[:doc_coverage] = source_module.doc_coverage unless
         Config.instance.hide_documentation_coverage
       doc[:name] = doc_model.name

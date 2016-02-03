@@ -40,7 +40,7 @@ begin
   task :rebuild_integration_fixtures do
     title 'Running Integration tests'
     sh 'rm -rf spec/integration_specs/tmp'
-    sh 'bundle exec bacon spec/integration_spec.rb'
+    puts `bundle exec bacon spec/integration_spec.rb`
 
     title 'Storing fixtures'
     # Copy the files to the files produced by the specs to the after folders
@@ -54,9 +54,10 @@ begin
 
     # Remove files not used for the comparison
     # To keep the git diff clean
-    files_glob = 'spec/integration_specs/*/after/{*,.git,.gitignore}'
+    files_glob = 'spec/integration_specs/*/after/{*,.*}'
     files_to_delete = FileList[files_glob]
-      .exclude('spec/integration_specs/*/after/docs',
+      .exclude('**/.', '**/..')
+      .exclude('spec/integration_specs/*/after/*docs',
                'spec/integration_specs/*/after/execution_output.txt')
       .include('**/*.dsidx')
       .include('**/*.tgz')
